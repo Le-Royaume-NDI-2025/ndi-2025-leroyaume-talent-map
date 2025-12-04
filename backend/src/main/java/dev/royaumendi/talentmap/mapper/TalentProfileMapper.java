@@ -27,12 +27,18 @@ public interface TalentProfileMapper {
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "verified", ignore = true)
     @Mapping(target = "verifiedAt", ignore = true)
+    @Mapping(target = "skills", ignore = true)
+    @Mapping(target = "languages", ignore = true)
+    @Mapping(target = "projects", ignore = true)
     TalentProfile fromUpsertRequest(UpsertTalentProfileRequest request);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "verified", ignore = true)
     @Mapping(target = "verifiedAt", ignore = true)
+    @Mapping(target = "skills", ignore = true)
+    @Mapping(target = "languages", ignore = true)
+    @Mapping(target = "projects", ignore = true)
     void updateFromUpsertRequest(UpsertTalentProfileRequest request, @MappingTarget TalentProfile profile);
 
     default List<String> extractSkillNames(TalentProfile profile) {
