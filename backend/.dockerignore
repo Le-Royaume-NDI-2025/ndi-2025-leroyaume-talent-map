@@ -1,0 +1,14 @@
+target/
+.git
+.gitignore
+.gitattributes
+.idea
+*.iml
+*.ipr
+*.iws
+.vscode
+.DS_Store
+*.log
+README.md
+HELP.md
+.mvn/wrapper/maven-wrapper.jar
