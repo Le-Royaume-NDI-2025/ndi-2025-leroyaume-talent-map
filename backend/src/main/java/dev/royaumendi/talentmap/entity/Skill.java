@@ -8,10 +8,6 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-/**
- * Skill entity representing a specific skill of a talent profile.
- * Categorized and leveled for better filtering and skill cloud visualization.
- */
 @Entity
 @Table(name = "skills")
 @Getter

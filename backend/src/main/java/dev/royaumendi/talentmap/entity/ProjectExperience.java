@@ -9,11 +9,6 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.UUID;
 
-/**
- * ProjectExperience entity representing a past or ongoing project of a talent
- * profile.
- * Provides context about the user's experience and work history.
- */
 @Entity
 @Table(name = "project_experiences")
 @Getter

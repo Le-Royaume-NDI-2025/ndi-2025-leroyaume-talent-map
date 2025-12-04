@@ -11,10 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-/**
- * User entity representing an authenticated user in the Talent Map platform.
- * Each user has exactly one talent profile.
- */
 @Entity
 @Table(name = "users")
 @Getter

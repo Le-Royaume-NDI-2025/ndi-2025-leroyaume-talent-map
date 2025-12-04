@@ -8,10 +8,6 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-/**
- * LanguageSkill entity representing a language proficiency of a talent profile.
- * Helps users find collaborators with compatible language skills.
- */
 @Entity
 @Table(name = "language_skills")
 @Getter
