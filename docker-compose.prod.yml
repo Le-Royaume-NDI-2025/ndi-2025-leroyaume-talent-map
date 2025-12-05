@@ -1,23 +1,4 @@
 services:
-  postgres:
-    image: postgres:16-alpine
-    container_name: talent-map-db-prod
-    environment:
-      POSTGRES_DB: talentmap
-      POSTGRES_USER: talentmap
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-talentmap_password}
-    ports:
-      - "${POSTGRES_PORT:-9432}:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - talent-map-network
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U talentmap" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
 
   backend:
     build:
@@ -25,20 +6,19 @@ services:
       dockerfile: Dockerfile
     container_name: talent-map-backend-prod
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/talentmap
-      SPRING_DATASOURCE_USERNAME: talentmap
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-talentmap_password}
+      SPRING_DATASOURCE_URL: jdbc:h2:file:/app/data/talentmap;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.H2Dialect
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "false"
+      SPRING_H2_CONSOLE_ENABLED: "false"
       JWT_SECRET: ${JWT_SECRET:-defaultSecretKeyForDevelopmentOnlyChangeInProductionMustBeLongEnough}
       JWT_VALIDITY: ${JWT_VALIDITY:-86400000}
     ports:
       - "${BACKEND_PORT:-9081}:8080"
     volumes:
       - uploads_data:/app/uploads
-    depends_on:
-      postgres:
-        condition: service_healthy
+      - h2_data:/app/data
     networks:
       - talent-map-network
     restart: unless-stopped
@@ -69,7 +49,7 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
-    driver: local
   uploads_data:
+    driver: local
+  h2_data:
     driver: local
