@@ -34,16 +34,17 @@ backend:
     limits:
       cpu: 1000m
       memory: 1Gi
-  livenessProbe:
-    path: /actuator/health
-    initialDelaySeconds: 40
-    periodSeconds: 30
-    timeoutSeconds: 10
-  readinessProbe:
-    path: /actuator/health
-    initialDelaySeconds: 20
-    periodSeconds: 10
-    timeoutSeconds: 5
+  # Temporarily disabled until Spring Security is configured to allow /actuator/health
+  # livenessProbe:
+  #   path: /actuator/health
+  #   initialDelaySeconds: 40
+  #   periodSeconds: 30
+  #   timeoutSeconds: 10
+  # readinessProbe:
+  #   path: /actuator/health
+  #   initialDelaySeconds: 20
+  #   periodSeconds: 10
+  #   timeoutSeconds: 5
   config:
     corsAllowedOrigins: https://talents.royaumendi.dev
     jwtValidity: "86400000"

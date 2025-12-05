@@ -47,6 +47,7 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_SECRET
+          {{- if .Values.backend.livenessProbe }}
           livenessProbe:
             httpGet:
               path: {{ .Values.backend.livenessProbe.path }}
@@ -55,6 +56,8 @@ spec:
             periodSeconds: {{ .Values.backend.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.backend.livenessProbe.timeoutSeconds }}
             failureThreshold: 3
+          {{- end }}
+          {{- if .Values.backend.readinessProbe }}
           readinessProbe:
             httpGet:
               path: {{ .Values.backend.readinessProbe.path }}
@@ -63,6 +66,7 @@ spec:
             periodSeconds: {{ .Values.backend.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.backend.readinessProbe.timeoutSeconds }}
             failureThreshold: 3
+          {{- end }}
           resources:
             {{- toYaml .Values.backend.resources | nindent 12 }}
 ---

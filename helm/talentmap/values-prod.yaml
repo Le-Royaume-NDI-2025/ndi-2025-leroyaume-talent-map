@@ -1,17 +1,17 @@
 environment: production
 
 backend:
-  replicaCount: 2
+  replicaCount: 1
   resources:
     requests:
-      cpu: 300m
-      memory: 768Mi
+      cpu: 100m
+      memory: 256Mi
     limits:
-      cpu: 2000m
-      memory: 2Gi
+      cpu: 1000m
+      memory: 1Gi
 
 frontend:
-  replicaCount: 3
+  replicaCount: 2
   resources:
     requests:
       cpu: 150m
