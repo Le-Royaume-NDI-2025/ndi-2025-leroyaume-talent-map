@@ -53,6 +53,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:9081}
     container_name: talent-map-frontend-prod
     ports:
       - "${FRONTEND_PORT:-9080}:80"
