@@ -5,7 +5,7 @@ environment: production
 
 image:
   registry: registry.axelfrache.me
-  repository: talent-map
+  repository: talents
   pullPolicy: Always
   backend:
     tag: latest

@@ -73,7 +73,7 @@ jobs:
       id: meta-backend
       uses: docker/metadata-action@v5
       with:
-        images: registry.axelfrache.me/talent-map/backend
+        images: registry.axelfrache.me/talents/backend
         tags: |
           type=ref,event=branch
           type=sha,prefix={{branch}}-
@@ -86,14 +86,14 @@ jobs:
         push: true
         tags: ${{ steps.meta-backend.outputs.tags }}
         labels: ${{ steps.meta-backend.outputs.labels }}
-        cache-from: type=registry,ref=registry.axelfrache.me/talent-map/backend:buildcache
-        cache-to: type=registry,ref=registry.axelfrache.me/talent-map/backend:buildcache,mode=max
+        cache-from: type=registry,ref=registry.axelfrache.me/talents/backend:buildcache
+        cache-to: type=registry,ref=registry.axelfrache.me/talents/backend:buildcache,mode=max
 
     - name: Extract metadata (tags, labels) for Frontend
       id: meta-frontend
       uses: docker/metadata-action@v5
       with:
-        images: registry.axelfrache.me/talent-map/frontend
+        images: registry.axelfrache.me/talents/frontend
         tags: |
           type=ref,event=branch
           type=sha,prefix={{branch}}-
@@ -108,5 +108,5 @@ jobs:
           VITE_API_BASE_URL=https://talents.royaumendi.dev/api
         tags: ${{ steps.meta-frontend.outputs.tags }}
         labels: ${{ steps.meta-frontend.outputs.labels }}
-        cache-from: type=registry,ref=registry.axelfrache.me/talent-map/frontend:buildcache
-        cache-to: type=registry,ref=registry.axelfrache.me/talent-map/frontend:buildcache,mode=max
+        cache-from: type=registry,ref=registry.axelfrache.me/talents/frontend:buildcache
+        cache-to: type=registry,ref=registry.axelfrache.me/talents/frontend:buildcache,mode=max
