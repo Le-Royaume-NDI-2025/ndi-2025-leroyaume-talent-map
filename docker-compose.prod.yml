@@ -28,7 +28,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/talentmap
       SPRING_DATASOURCE_USERNAME: talentmap
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-talentmap_password}
-      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "false"
       JWT_SECRET: ${JWT_SECRET:-defaultSecretKeyForDevelopmentOnlyChangeInProductionMustBeLongEnough}
       JWT_VALIDITY: ${JWT_VALIDITY:-86400000}
