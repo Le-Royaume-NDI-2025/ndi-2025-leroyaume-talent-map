@@ -1,0 +1,33 @@
+environment: production
+
+backend:
+  replicaCount: 2
+  resources:
+    requests:
+      cpu: 300m
+      memory: 768Mi
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+
+frontend:
+  replicaCount: 3
+  resources:
+    requests:
+      cpu: 150m
+      memory: 192Mi
+    limits:
+      cpu: 750m
+      memory: 384Mi
+
+postgres:
+  persistence:
+    enabled: true
+    size: 50Gi
+  resources:
+    requests:
+      cpu: 300m
+      memory: 768Mi
+    limits:
+      cpu: 2000m
+      memory: 2Gi

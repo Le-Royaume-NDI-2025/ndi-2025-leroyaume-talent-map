@@ -2,14 +2,18 @@ FROM maven:3.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
+# Copy package files
 COPY pom.xml .
-COPY .mvn .mvn
-COPY mvnw .
-RUN chmod +x mvnw
-RUN ./mvnw dependency:go-offline -B
 
+# Download dependencies
+RUN mvn dependency:go-offline -B
+
+# Copy source code and build
 COPY src ./src
-RUN ./mvnw clean package -DskipTests -B
+RUN mvn clean package -DskipTests \
+  -Dmaven.wagon.http.pool=false \
+  -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 \
+  -Dmaven.wagon.http.retryHandler.count=3
 
 FROM eclipse-temurin:21-jre-alpine
 

@@ -1,0 +1,12 @@
+apiVersion: v2
+name: talentmap
+description: A Talent Management Platform - PostgreSQL, Spring Boot backend, React frontend
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - talentmap
+  - talent-management
+  - recruitment
+maintainers:
+  - name: Axel Frache

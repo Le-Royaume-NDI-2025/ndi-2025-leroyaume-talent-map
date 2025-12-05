@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: talentmap-prod
+  namespace: argocd
+  labels:
+    environment: production
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/Le-Royaume-NDI-2025/ndi-2025-leroyaume-talent-map.git
+    targetRevision: main
+    path: helm/talentmap
+    helm:
+      valueFiles:
+        - values-prod.yaml
+      parameters:
+        - name: image.backend.tag
+          value: latest
+        - name: image.frontend.tag
+          value: latest
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: talentmap
+  
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
+    - group: apps
+      kind: StatefulSet
+      jsonPointers:
+        - /spec/replicas

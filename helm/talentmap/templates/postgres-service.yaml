@@ -1,0 +1,20 @@
+{{- if .Values.postgres.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "talentmap.name" . }}-postgres
+  namespace: {{ include "talentmap.namespace" . }}
+  labels:
+    {{- include "talentmap.postgres.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.postgres.service.type }}
+  ports:
+    - port: {{ .Values.postgres.service.port }}
+      targetPort: postgres
+      protocol: TCP
+      name: postgres
+  selector:
+    app: postgres
+    app.kubernetes.io/name: {{ include "talentmap.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
