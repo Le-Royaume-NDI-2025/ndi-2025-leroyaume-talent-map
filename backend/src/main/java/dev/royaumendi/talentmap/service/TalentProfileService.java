@@ -86,6 +86,10 @@ public class TalentProfileService {
         profile.setUser(user);
         profile.setVerified(false);
 
+        if (request.profilePictureUrl() != null) {
+            user.setProfilePictureUrl(request.profilePictureUrl());
+        }
+
         if (request.skills() != null) {
             request.skills().forEach(skillDto -> {
                 var skill = skillMapper.fromDto(skillDto);
@@ -122,6 +126,10 @@ public class TalentProfileService {
         profile.getLanguages().clear();
         profile.getProjects().clear();
 
+        if (request.profilePictureUrl() != null) {
+            profile.getUser().setProfilePictureUrl(request.profilePictureUrl());
+        }
+
         talentProfileMapper.updateFromUpsertRequest(request, profile);
 
         if (request.skills() != null) {
@@ -147,5 +155,13 @@ public class TalentProfileService {
 
         TalentProfile saved = talentProfileRepository.save(profile);
         return talentProfileMapper.toMyProfileDto(saved);
+    }
+
+    @Transactional
+    public void updateProfilePicture(UUID userId, String pictureUrl) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        user.setProfilePictureUrl(pictureUrl);
+        userRepository.save(user);
     }
 }

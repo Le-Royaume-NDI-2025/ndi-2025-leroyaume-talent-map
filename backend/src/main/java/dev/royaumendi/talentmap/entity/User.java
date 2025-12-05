@@ -29,6 +29,9 @@ public class User {
     @Column(nullable = false)
     private String passwordHash;
 
+    @Column(length = 512)
+    private String profilePictureUrl;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)

@@ -59,6 +59,7 @@ export interface TalentSummaryDto {
     title?: string;
     city?: string;
     country?: string;
+    profilePictureUrl?: string;
     verified: boolean;
     skillNames: string[];
 }
@@ -71,6 +72,7 @@ export interface TalentDetailDto {
     bio?: string;
     city?: string;
     country?: string;
+    profilePictureUrl?: string;
     availabilityStatus: AvailabilityStatus;
     verified: boolean;
     skills: SkillDto[];
@@ -86,6 +88,7 @@ export interface MyTalentProfileDto {
     bio?: string;
     city?: string;
     country?: string;
+    profilePictureUrl?: string;
     availabilityStatus: AvailabilityStatus;
     verified: boolean;
     skills: SkillDto[];
@@ -100,6 +103,7 @@ export interface UpsertTalentProfileRequest {
     bio?: string;
     city?: string;
     country?: string;
+    profilePictureUrl?: string;
     availabilityStatus?: AvailabilityStatus;
     skills?: SkillDto[];
     languages?: LanguageSkillDto[];

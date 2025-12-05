@@ -1,6 +1,7 @@
 import { TalentDetailDto } from '../../lib/api/types';
 import { CardBody, CardContainer, CardItem } from '../ui/3d-card';
 import { Badge } from '../ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { MapPin, CheckCircle2, Briefcase } from 'lucide-react';
 
 interface TalentProfileCardProps {
@@ -34,13 +35,28 @@ export function TalentProfileCard({ talent }: TalentProfileCardProps) {
         }
     };
 
+    const getInitials = () => {
+        return `${talent.firstName[0]}${talent.lastName[0]}`.toUpperCase();
+    };
+
     return (
         <CardContainer className="inter-var w-full" containerClassName="py-8 w-full max-w-2xl mx-auto">
             <CardBody className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 relative group/card dark:hover:shadow-2xl dark:hover:shadow-primary/30 border-gray-200 dark:border-gray-700 w-full max-w-full rounded-2xl p-6 sm:p-8 border-2 shadow-xl overflow-hidden">
 
-                {/* Header with name and verification */}
-                <div className="flex items-start justify-between mb-4 sm:mb-6 gap-4">
-                    <div className="flex-1 min-w-0">
+                {/* Avatar + Header */}
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 mb-4 sm:mb-6">
+                    {/* Avatar with 3D effect */}
+                    <CardItem translateZ="70" className="flex-shrink-0">
+                        <Avatar className="h-24 w-24 sm:h-28 sm:w-28 border-4 border-primary/20 shadow-lg">
+                            <AvatarImage src={talent.profilePictureUrl} alt={`${talent.firstName} ${talent.lastName}`} />
+                            <AvatarFallback className="text-2xl font-bold bg-gradient-to-br from-primary/20 to-primary/10">
+                                {getInitials()}
+                            </AvatarFallback>
+                        </Avatar>
+                    </CardItem>
+
+                    {/* Name and Title */}
+                    <div className="flex-1 min-w-0 text-center sm:text-left">
                         <CardItem
                             translateZ="50"
                             className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent break-words"
@@ -51,7 +67,7 @@ export function TalentProfileCard({ talent }: TalentProfileCardProps) {
                             <CardItem
                                 as="p"
                                 translateZ="40"
-                                className="text-base sm:text-lg font-medium text-gray-600 dark:text-gray-300 mt-2 sm:mt-3 flex items-center gap-2 flex-wrap"
+                                className="text-base sm:text-lg font-medium text-gray-600 dark:text-gray-300 mt-2 sm:mt-3 flex items-center justify-center sm:justify-start gap-2 flex-wrap"
                             >
                                 <Briefcase className="inline h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
                                 <span className="break-words">{talent.title}</span>
@@ -59,6 +75,7 @@ export function TalentProfileCard({ talent }: TalentProfileCardProps) {
                         )}
                     </div>
 
+                    {/* Verified Badge */}
                     {talent.verified && (
                         <CardItem translateZ="60" className="flex-shrink-0">
                             <Badge variant="default" className="flex items-center gap-1.5 text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-1.5 bg-primary shadow-lg">
@@ -73,7 +90,7 @@ export function TalentProfileCard({ talent }: TalentProfileCardProps) {
                 {(talent.city || talent.country) && (
                     <CardItem
                         translateZ="30"
-                        className="text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 flex items-center gap-2 text-sm sm:text-base flex-wrap"
+                        className="text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 flex items-center justify-center sm:justify-start gap-2 text-sm sm:text-base flex-wrap"
                     >
                         <MapPin className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
                         <span className="break-words">
@@ -89,7 +106,7 @@ export function TalentProfileCard({ talent }: TalentProfileCardProps) {
                     <CardItem
                         as="p"
                         translateZ="40"
-                        className="text-gray-700 dark:text-gray-300 text-sm sm:text-base mb-6 sm:mb-8 leading-relaxed break-words"
+                        className="text-gray-700 dark:text-gray-300 text-sm sm:text-base mb-6 sm:mb-8 leading-relaxed break-words text-center sm:text-left"
                     >
                         {talent.bio}
                     </CardItem>
@@ -128,7 +145,7 @@ export function TalentProfileCard({ talent }: TalentProfileCardProps) {
                 {/* Availability status */}
                 <CardItem
                     translateZ="40"
-                    className="mb-4 sm:mb-6"
+                    className="mb-4 sm:mb-6 flex justify-center sm:justify-start"
                 >
                     <div className={`inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold ${getAvailabilityColor()}`}>
                         {getAvailabilityText()}

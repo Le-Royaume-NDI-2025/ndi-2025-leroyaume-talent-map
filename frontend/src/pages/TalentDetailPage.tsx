@@ -19,7 +19,7 @@ export function TalentDetailPage() {
         const loadTalent = async () => {
             try {
                 setLoading(true);
-                const data = await talentsApi.getById(id);
+                const data = await talentsApi.getTalentById(id);
                 setTalent(data);
             } catch (err) {
                 setError('Failed to load talent profile');

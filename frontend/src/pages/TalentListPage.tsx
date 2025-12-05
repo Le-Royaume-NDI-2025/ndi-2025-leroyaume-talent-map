@@ -23,7 +23,7 @@ export function TalentListPage() {
         try {
             setLoading(true);
             setError(null);
-            const data = await talentsApi.getAll(params);
+            const data = await talentsApi.searchTalents(params || {});
             setTalents(data);
         } catch (err) {
             setError('Failed to load talents');

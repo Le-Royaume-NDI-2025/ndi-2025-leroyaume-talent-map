@@ -17,10 +17,13 @@ import java.util.stream.Collectors;
 public interface TalentProfileMapper {
 
     @Mapping(target = "skillNames", expression = "java(extractSkillNames(profile))")
+    @Mapping(target = "profilePictureUrl", expression = "java(profile.getUser() != null ? profile.getUser().getProfilePictureUrl() : null)")
     TalentSummaryDto toSummaryDto(TalentProfile profile);
 
+    @Mapping(target = "profilePictureUrl", expression = "java(profile.getUser() != null ? profile.getUser().getProfilePictureUrl() : null)")
     TalentDetailDto toDetailDto(TalentProfile profile);
 
+    @Mapping(target = "profilePictureUrl", expression = "java(profile.getUser() != null ? profile.getUser().getProfilePictureUrl() : null)")
     MyTalentProfileDto toMyProfileDto(TalentProfile profile);
 
     @Mapping(target = "id", ignore = true)

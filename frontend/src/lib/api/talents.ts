@@ -13,7 +13,7 @@ export interface TalentSearchParams {
 }
 
 export const talentsApi = {
-    getAll: (params?: TalentSearchParams) => {
+    searchTalents: (params: TalentSearchParams) => {
         const queryParams = new URLSearchParams();
         if (params?.city) queryParams.set('city', params.city);
         if (params?.skill) queryParams.set('skill', params.skill);
@@ -23,7 +23,7 @@ export const talentsApi = {
         return apiRequest<TalentSummaryDto[]>(`/api/public/talents${query ? `?${query}` : ''}`);
     },
 
-    getById: (id: string) =>
+    getTalentById: (id: string) =>
         apiRequest<TalentDetailDto>(`/api/public/talents/${id}`),
 
     getMyProfile: () =>
@@ -40,4 +40,44 @@ export const talentsApi = {
             method: 'PUT',
             body: JSON.stringify(data),
         }),
+
+    uploadProfilePicture: async (file: File): Promise<{ url: string }> => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const token = localStorage.getItem('jwt_token');
+        if (!token) {
+            throw new Error('Not authenticated');
+        }
+
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'}/api/me/talent/picture`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+            body: formData,
+        });
+
+        if (!response.ok) {
+            let errorMessage = 'Upload failed';
+            try {
+                const error = await response.json();
+                errorMessage = error.error || errorMessage;
+            } catch {
+                errorMessage = `Upload failed with status ${response.status}`;
+            }
+            throw new Error(errorMessage);
+        }
+
+        const text = await response.text();
+        if (!text) {
+            throw new Error('Empty response from server');
+        }
+
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            throw new Error('Invalid JSON response from server');
+        }
+    },
 };
