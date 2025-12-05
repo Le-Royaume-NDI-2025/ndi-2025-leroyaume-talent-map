@@ -29,14 +29,14 @@ export function TalentCard({ talent }: TalentCardProps) {
                 <CardHeader>
                     <div className="flex items-start justify-between gap-4">
                         <div className="flex items-start gap-3 min-w-0 flex-1">
-                            <Avatar className="h-12 w-12 border-2 border-primary/20 flex-shrink-0">
+                            <Avatar className="h-10 w-10 sm:h-12 sm:w-12 border-2 border-primary/20 flex-shrink-0">
                                 <AvatarImage src={talent.profilePictureUrl} alt={`${talent.firstName} ${talent.lastName}`} />
-                                <AvatarFallback className="text-sm font-bold bg-gradient-to-br from-primary/20 to-primary/10">
+                                <AvatarFallback className="text-xs sm:text-sm font-bold bg-gradient-to-br from-primary/20 to-primary/10">
                                     {getInitials()}
                                 </AvatarFallback>
                             </Avatar>
                             <div className="min-w-0 flex-1">
-                                <CardTitle className="text-xl break-words">
+                                <CardTitle className="text-lg sm:text-xl break-words">
                                     {talent.firstName} {talent.lastName}
                                 </CardTitle>
                                 {talent.title && (
@@ -45,7 +45,7 @@ export function TalentCard({ talent }: TalentCardProps) {
                             </div>
                         </div>
                         {talent.verified && (
-                            <Badge variant="default" className="ml-2 flex-shrink-0">
+                            <Badge variant="default" className="ml-2 flex-shrink-0 text-xs">
                                 ✓ Verified
                             </Badge>
                         )}
@@ -65,12 +65,12 @@ export function TalentCard({ talent }: TalentCardProps) {
                     {talent.skillNames && talent.skillNames.length > 0 && (
                         <div className="flex gap-1 flex-wrap">
                             {talent.skillNames.slice(0, 4).map((skill) => (
-                                <Badge key={skill} variant="secondary">
+                                <Badge key={skill} variant="secondary" className="text-xs">
                                     {skill}
                                 </Badge>
                             ))}
                             {talent.skillNames.length > 4 && (
-                                <Badge variant="outline">+{talent.skillNames.length - 4}</Badge>
+                                <Badge variant="outline" className="text-xs">+{talent.skillNames.length - 4}</Badge>
                             )}
                         </div>
                     )}

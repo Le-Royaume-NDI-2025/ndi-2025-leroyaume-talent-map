@@ -30,7 +30,7 @@ export function LoginPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-12 max-w-md">
+        <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-12 max-w-md">
             <Card>
                 <CardHeader>
                     <CardTitle>Login</CardTitle>

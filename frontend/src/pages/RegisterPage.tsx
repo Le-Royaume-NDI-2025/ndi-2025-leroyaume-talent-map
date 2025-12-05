@@ -34,7 +34,7 @@ export function RegisterPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-12 max-w-md">
+        <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-12 max-w-md">
             <Card>
                 <CardHeader>
                     <CardTitle>Create Account</CardTitle>
@@ -48,7 +48,7 @@ export function RegisterPage() {
                             </div>
                         )}
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="firstName">First Name</Label>
                                 <Input

@@ -4,28 +4,28 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 
 export function HomePage() {
     return (
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-8 md:py-12">
             <div className="max-w-4xl mx-auto text-center space-y-8">
-                <h1 className="text-5xl font-bold tracking-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
                     Discover Talents, Build Connections
                 </h1>
-                <p className="text-xl text-muted-foreground">
+                <p className="text-base sm:text-lg md:text-xl text-muted-foreground">
                     Welcome to Talent Map - the platform connecting talented individuals
                     for collaboration and innovation during Nuit de l'Info 2025.
                 </p>
 
-                <div className="flex gap-4 justify-center">
-                    <Link to="/talents">
-                        <Button size="lg">Explore Talents</Button>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                    <Link to="/talents" className="w-full sm:w-auto">
+                        <Button size="lg" className="w-full sm:w-auto">Explore Talents</Button>
                     </Link>
-                    <Link to="/register">
-                        <Button size="lg" variant="outline">
+                    <Link to="/register" className="w-full sm:w-auto">
+                        <Button size="lg" variant="outline" className="w-full sm:w-auto">
                             Declare My Talent
                         </Button>
                     </Link>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-6 mt-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-12">
                     <Card>
                         <CardHeader>
                             <CardTitle>Discover</CardTitle>

@@ -44,14 +44,14 @@ export function TalentDetailPage() {
         );
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-6xl">
+        <div className="container mx-auto px-3 py-6 sm:px-4 sm:py-8 max-w-6xl">
             {/* 3D Interactive Profile Card */}
-            <div className="flex justify-center mb-12">
+            <div className="flex justify-center mb-6 sm:mb-10 lg:mb-12">
                 <TalentProfileCard talent={talent} />
             </div>
 
             {/* Detailed Information Below */}
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {/* Skills Section */}
                 {talent.skills && talent.skills.length > 0 && (
                     <Card>
@@ -112,7 +112,7 @@ export function TalentDetailPage() {
                         <CardTitle>Project Experience</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="grid md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {talent.projects.map((project, idx) => (
                                 <Card key={idx} className="bg-secondary/30">
                                     <CardHeader>

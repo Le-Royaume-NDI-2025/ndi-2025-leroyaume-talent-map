@@ -121,11 +121,11 @@ export function MyProfilePage() {
     return `${formData.firstName[0]}${formData.lastName[0]}`.toUpperCase();
   };
 
-  if (loading) return <div className="container mx-auto px-4 py-12 text-center">Loading...</div>;
+  if (loading) return <div className="container mx-auto px-3 sm:px-4 py-8 sm:py-12 text-center">Loading...</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-6">My Talent Profile</h1>
+    <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 max-w-4xl">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6">My Talent Profile</h1>
 
       {error && (
         <div className="bg-destructive/15 text-destructive px-4 py-3 rounded mb-6">
@@ -139,7 +139,7 @@ export function MyProfilePage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         {/* Profile Picture */}
         <Card>
           <CardHeader>
@@ -194,7 +194,7 @@ export function MyProfilePage() {
             <CardTitle>Basic Information</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name *</Label>
                 <Input
@@ -315,12 +315,12 @@ export function MyProfilePage() {
 
         <Separator />
 
-        <div className="flex gap-4">
-          <Button type="submit" disabled={saving || uploading}>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+          <Button type="submit" disabled={saving || uploading} className="w-full sm:w-auto">
             {saving ? 'Saving...' : hasProfile ? 'Update Profile' : 'Create Profile'}
           </Button>
           {hasProfile && (
-            <Button type="button" variant="outline" onClick={loadProfile} disabled={saving || uploading}>
+            <Button type="button" variant="outline" onClick={loadProfile} disabled={saving || uploading} className="w-full sm:w-auto">
               Reset Changes
             </Button>
           )}

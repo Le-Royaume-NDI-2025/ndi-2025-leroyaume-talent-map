@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../ui/button';
 import { ThemeToggle } from '../theme/ThemeToggle';
+import { MobileNav } from './MobileNav';
 
 export function NavBar() {
     const { isAuthenticated, isAdmin, user, logout } = useAuth();
@@ -9,11 +10,12 @@ export function NavBar() {
     return (
         <nav className="border-b">
             <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-                <Link to="/" className="text-2xl font-bold">
+                <Link to="/" className="text-xl sm:text-2xl font-bold">
                     Talent Map
                 </Link>
 
-                <div className="flex items-center gap-4">
+                {/* Desktop Navigation */}
+                <div className="hidden md:flex items-center gap-4">
                     <Link to="/talents">
                         <Button variant="ghost">Explore Talents</Button>
                     </Link>
@@ -29,7 +31,8 @@ export function NavBar() {
                                 </Link>
                             )}
                             <Button variant="outline" onClick={logout}>
-                                Logout ({user?.email})
+                                <span className="hidden lg:inline">Logout ({user?.email})</span>
+                                <span className="lg:hidden">Logout</span>
                             </Button>
                         </>
                     ) : (
@@ -44,6 +47,17 @@ export function NavBar() {
                     )}
 
                     <ThemeToggle />
+                </div>
+
+                {/* Mobile Navigation */}
+                <div className="flex md:hidden items-center gap-2">
+                    <ThemeToggle />
+                    <MobileNav
+                        isAuthenticated={isAuthenticated}
+                        isAdmin={isAdmin}
+                        userEmail={user?.email}
+                        onLogout={logout}
+                    />
                 </div>
             </div>
         </nav>

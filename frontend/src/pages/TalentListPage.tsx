@@ -48,23 +48,23 @@ export function TalentListPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-4xl font-bold mb-8">Explore Talents</h1>
+        <div className="container mx-auto px-3 py-6 sm:px-4 sm:py-8">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8">Explore Talents</h1>
 
-            <div className="bg-card rounded-lg border p-6 mb-8">
-                <div className="grid md:grid-cols-4 gap-4">
+            <div className="bg-card rounded-lg border p-4 sm:p-6 mb-6 sm:mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <Input
                         placeholder="Search by skill..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="md:col-span-2"
+                        className="sm:col-span-2"
                     />
                     <Input
                         placeholder="City..."
                         value={filters.city || ''}
                         onChange={(e) => setFilters({ ...filters, city: e.target.value })}
                     />
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 sm:col-span-2 lg:col-span-1">
                         <Checkbox
                             id="verified"
                             checked={filters.verified || false}
@@ -75,9 +75,9 @@ export function TalentListPage() {
                         <Label htmlFor="verified">Verified only</Label>
                     </div>
                 </div>
-                <div className="flex gap-2 mt-4">
-                    <Button onClick={handleSearch}>Search</Button>
-                    <Button variant="outline" onClick={handleReset}>
+                <div className="flex flex-col sm:flex-row gap-2 mt-4">
+                    <Button onClick={handleSearch} className="w-full sm:w-auto">Search</Button>
+                    <Button variant="outline" onClick={handleReset} className="w-full sm:w-auto">
                         Reset
                     </Button>
                 </div>
@@ -94,7 +94,7 @@ export function TalentListPage() {
                     <p className="text-muted-foreground mb-4">
                         Found {talents.length} talent{talents.length !== 1 ? 's' : ''}
                     </p>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                         {talents.map((talent) => (
                             <TalentCard key={talent.id} talent={talent} />
                         ))}
