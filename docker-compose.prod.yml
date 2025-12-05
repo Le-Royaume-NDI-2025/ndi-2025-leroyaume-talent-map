@@ -1,0 +1,73 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: talent-map-db-prod
+    environment:
+      POSTGRES_DB: talentmap
+      POSTGRES_USER: talentmap
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-talentmap_password}
+    ports:
+      - "${POSTGRES_PORT:-9432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - talent-map-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U talentmap" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: talent-map-backend-prod
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/talentmap
+      SPRING_DATASOURCE_USERNAME: talentmap
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-talentmap_password}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_SHOW_SQL: "false"
+      JWT_SECRET: ${JWT_SECRET:-defaultSecretKeyForDevelopmentOnlyChangeInProductionMustBeLongEnough}
+      JWT_VALIDITY: ${JWT_VALIDITY:-86400000}
+    ports:
+      - "${BACKEND_PORT:-9081}:8080"
+    volumes:
+      - uploads_data:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - talent-map-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/api/public/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: talent-map-frontend-prod
+    ports:
+      - "${FRONTEND_PORT:-9080}:80"
+    depends_on:
+      - backend
+    networks:
+      - talent-map-network
+    restart: unless-stopped
+
+networks:
+  talent-map-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  uploads_data:
+    driver: local
