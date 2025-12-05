@@ -8,9 +8,9 @@ image:
   repository: talents
   pullPolicy: Always
   backend:
-    tag: latest
+    tag: main
   frontend:
-    tag: latest
+    tag: main
 
 imagePullSecrets:
   - name: harbor-registry-secret
