@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { TalentSummaryDto } from '../../lib/api/types';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
 import { Badge } from '../ui/badge';
+import { BorderBeam } from '../ui/border-beam';
 import { MapPin } from 'lucide-react';
 
 interface TalentCardProps {
@@ -11,7 +12,15 @@ interface TalentCardProps {
 export function TalentCard({ talent }: TalentCardProps) {
     return (
         <Link to={`/talents/${talent.id}`}>
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer relative overflow-hidden">
+                <BorderBeam
+                    size={100}
+                    duration={8}
+                    delay={Math.random() * 5}
+                    colorFrom="#3b82f6"
+                    colorTo="#8b5cf6"
+                    borderWidth={2}
+                />
                 <CardHeader>
                     <div className="flex items-start justify-between">
                         <CardTitle className="text-xl">

@@ -4,7 +4,8 @@ import { talentsApi } from '../lib/api/talents';
 import { TalentDetailDto } from '../lib/api/types';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { MapPin, BriefcaseIcon, Globe } from 'lucide-react';
+import { Globe, BriefcaseIcon, ExternalLink } from 'lucide-react';
+import { TalentProfileCard } from '../components/talents/TalentProfileCard';
 
 export function TalentDetailPage() {
     const { id } = useParams<{ id: string }>();
@@ -31,98 +32,135 @@ export function TalentDetailPage() {
         loadTalent();
     }, [id]);
 
-    if (loading) return <div className="container mx-auto px-4 py-12 text-center">Loading...</div>;
-    if (error || !talent) return <div className="container mx-auto px-4 py-12 text-center text-destructive">{error || 'Talent not found'}</div>;
+    if (loading)
+        return (
+            <div className="container mx-auto px-4 py-12 text-center">Loading...</div>
+        );
+    if (error || !talent)
+        return (
+            <div className="container mx-auto px-4 py-12 text-center text-destructive">
+                {error || 'Talent not found'}
+            </div>
+        );
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-            <Card>
-                <CardHeader>
-                    <div className="flex items-start justify-between">
-                        <div>
-                            <CardTitle className="text-3xl mb-2">
-                                {talent.firstName} {talent.lastName}
-                            </CardTitle>
-                            {talent.title && <p className="text-xl text-muted-foreground">{talent.title}</p>}
-                        </div>
-                        {talent.verified && (
-                            <Badge variant="default" className="text-lg px-3 py-1">✓ Verified Talent</Badge>
-                        )}
-                    </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                    {(talent.city || talent.country) && (
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                            <MapPin className="h-5 w-5" />
-                            <span>{talent.city}{talent.city && talent.country && ', '}{talent.country}</span>
-                        </div>
-                    )}
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+            {/* 3D Interactive Profile Card */}
+            <div className="flex justify-center mb-12">
+                <TalentProfileCard talent={talent} />
+            </div>
 
-                    {talent.bio && (
-                        <div>
-                            <h3 className="font-semibold mb-2">About</h3>
-                            <p className="text-muted-foreground">{talent.bio}</p>
-                        </div>
-                    )}
-
-                    {talent.skills && talent.skills.length > 0 && (
-                        <div>
-                            <h3 className="font-semibold mb-3">Skills</h3>
-                            <div className="flex gap-2 flex-wrap">
+            {/* Detailed Information Below */}
+            <div className="grid md:grid-cols-2 gap-6">
+                {/* Skills Section */}
+                {talent.skills && talent.skills.length > 0 && (
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Skills & Expertise</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-3">
                                 {talent.skills.map((skill, idx) => (
-                                    <Badge key={idx} variant="secondary">
-                                        {skill.name} • {skill.level}
-                                    </Badge>
+                                    <div
+                                        key={idx}
+                                        className="flex items-center justify-between p-3 bg-secondary/50 rounded-lg"
+                                    >
+                                        <div>
+                                            <p className="font-medium">{skill.name}</p>
+                                            <p className="text-xs text-muted-foreground">
+                                                {skill.category}
+                                            </p>
+                                        </div>
+                                        <Badge variant="outline">{skill.level}</Badge>
+                                    </div>
                                 ))}
                             </div>
-                        </div>
-                    )}
+                        </CardContent>
+                    </Card>
+                )}
 
-                    {talent.languages && talent.languages.length > 0 && (
-                        <div>
-                            <h3 className="font-semibold mb-3">Languages</h3>
-                            <div className="flex gap-2 flex-wrap">
+                {/* Languages Section */}
+                {talent.languages && talent.languages.length > 0 && (
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Languages</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-3">
                                 {talent.languages.map((lang, idx) => (
-                                    <Badge key={idx} variant="outline">
-                                        <Globe className="h-3 w-3 mr-1" />
-                                        {lang.languageName} ({lang.proficiency})
-                                    </Badge>
+                                    <div
+                                        key={idx}
+                                        className="flex items-center justify-between p-3 bg-secondary/50 rounded-lg"
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <Globe className="h-4 w-4 text-muted-foreground" />
+                                            <p className="font-medium">{lang.languageName}</p>
+                                        </div>
+                                        <Badge variant="outline">{lang.proficiency}</Badge>
+                                    </div>
                                 ))}
                             </div>
-                        </div>
-                    )}
+                        </CardContent>
+                    </Card>
+                )}
+            </div>
 
-                    {talent.projects && talent.projects.length > 0 && (
-                        <div>
-                            <h3 className="font-semibold mb-3">Projects</h3>
-                            <div className="space-y-4">
-                                {talent.projects.map((project, idx) => (
-                                    <Card key={idx}>
-                                        <CardHeader>
-                                            <CardTitle className="text-lg flex items-center gap-2">
-                                                <BriefcaseIcon className="h-4 w-4" />
-                                                {project.name}
-                                            </CardTitle>
-                                        </CardHeader>
-                                        <CardContent className="space-y-2">
-                                            {project.role && <p className="text-sm font-medium">{project.role}</p>}
-                                            {project.description && <p className="text-sm text-muted-foreground">{project.description}</p>}
-                                            {project.technologies && (
-                                                <p className="text-sm"><span className="font-medium">Technologies:</span> {project.technologies}</p>
-                                            )}
-                                            {project.link && (
-                                                <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">
-                                                    View Project →
-                                                </a>
-                                            )}
-                                        </CardContent>
-                                    </Card>
-                                ))}
-                            </div>
+            {/* Projects Section - Full Width */}
+            {talent.projects && talent.projects.length > 0 && (
+                <Card className="mt-6">
+                    <CardHeader>
+                        <CardTitle>Project Experience</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid md:grid-cols-2 gap-4">
+                            {talent.projects.map((project, idx) => (
+                                <Card key={idx} className="bg-secondary/30">
+                                    <CardHeader>
+                                        <CardTitle className="text-lg flex items-center gap-2">
+                                            <BriefcaseIcon className="h-5 w-5" />
+                                            {project.name}
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="space-y-2 text-sm">
+                                        {project.role && (
+                                            <p className="font-medium text-primary">{project.role}</p>
+                                        )}
+                                        {project.description && (
+                                            <p className="text-muted-foreground">
+                                                {project.description}
+                                            </p>
+                                        )}
+                                        {project.technologies && (
+                                            <div>
+                                                <p className="font-medium text-xs text-muted-foreground mb-1">
+                                                    Technologies
+                                                </p>
+                                                <p className="text-sm">{project.technologies}</p>
+                                            </div>
+                                        )}
+                                        {(project.startDate || project.endDate) && (
+                                            <p className="text-xs text-muted-foreground">
+                                                {project.startDate}{' '}
+                                                {project.endDate && `- ${project.endDate}`}
+                                            </p>
+                                        )}
+                                        {project.link && (
+                                            <a
+                                                href={project.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-primary hover:underline flex items-center gap-1 text-sm"
+                                            >
+                                                View Project <ExternalLink className="h-3 w-3" />
+                                            </a>
+                                        )}
+                                    </CardContent>
+                                </Card>
+                            ))}
                         </div>
-                    )}
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+            )}
         </div>
     );
 }

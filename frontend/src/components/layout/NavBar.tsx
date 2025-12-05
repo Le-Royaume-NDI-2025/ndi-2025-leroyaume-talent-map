@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../ui/button';
+import { ThemeToggle } from '../theme/ThemeToggle';
 
 export function NavBar() {
     const { isAuthenticated, isAdmin, user, logout } = useAuth();
@@ -41,6 +42,8 @@ export function NavBar() {
                             </Link>
                         </>
                     )}
+
+                    <ThemeToggle />
                 </div>
             </div>
         </nav>
