@@ -48,6 +48,10 @@ backend:
   config:
     corsAllowedOrigins: https://talents.royaumendi.dev
     jwtValidity: "86400000"
+  persistence:
+    enabled: false
+    size: 5Gi
+    # storageClass: "" # Uncomment to use a specific storageClass
 
 frontend:
   replicaCount: 3

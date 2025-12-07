@@ -105,7 +105,7 @@ jobs:
         context: ./frontend
         push: true
         build-args: |
-          VITE_API_BASE_URL=https://talents.royaumendi.dev/api
+          VITE_API_BASE_URL=https://talents.royaumendi.dev
         tags: ${{ steps.meta-frontend.outputs.tags }}
         labels: ${{ steps.meta-frontend.outputs.labels }}
         cache-from: type=registry,ref=registry.axelfrache.me/talents/frontend:buildcache

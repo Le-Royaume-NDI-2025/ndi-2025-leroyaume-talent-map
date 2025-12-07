@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "talentmap.name" . }}-backend
+  name: {{ include "talentmap.name" . }}-backend-api
   namespace: {{ include "talentmap.namespace" . }}
   labels:
     {{- include "talentmap.backend.labels" . | nindent 4 }}
@@ -20,6 +20,31 @@ spec:
         paths:
           - path: /api(/|$)(.*)
             pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ include "talentmap.name" . }}-backend
+                port:
+                  number: {{ .Values.backend.service.port }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "talentmap.name" . }}-backend-uploads
+  namespace: {{ include "talentmap.namespace" . }}
+  labels:
+    {{- include "talentmap.backend.labels" . | nindent 4 }}
+  annotations:
+    {{- if .Values.ingress.annotations }}
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+    {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /uploads
+            pathType: Prefix
             backend:
               service:
                 name: {{ include "talentmap.name" . }}-backend
