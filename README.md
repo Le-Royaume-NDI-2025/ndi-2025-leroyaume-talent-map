@@ -189,7 +189,7 @@ talent-map/
 
 **Utilisabilité**
 - Application prête pour la production
-- Documentation d'installation (KUBERNETES_DEPLOYMENT.md)
+- Documentation d'installation
 - Scripts de déploiement fournis
 - Monitoring et health checks configurés
 
@@ -224,8 +224,6 @@ docker-compose up -d
 ```
 
 ### Déploiement Production (Kubernetes)
-
-Voir la documentation complète dans [KUBERNETES_DEPLOYMENT.md](KUBERNETES_DEPLOYMENT.md)
 
 ```bash
 # Créer les secrets Kubernetes
